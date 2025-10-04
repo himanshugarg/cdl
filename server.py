@@ -90,6 +90,8 @@ if __name__ == '__main__':
     debug_mode = os.environ.get('FLASK_DEBUG', '0') == '1'
     app.run(debug=debug_mode)
 
+
+# TODO: Address the following limitations for production use:s
 # Secret Management
 
 # The shared secret defaults to an empty string if not set. The app should fail to start if the secret is missing.
