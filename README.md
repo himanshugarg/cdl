@@ -19,7 +19,13 @@
     flask --app server run
     ```
 
-5. **Invoke the API:**
+5. **Compute payload signature:**
+    ```bash
+    $ python hash.py mock_payloads/payment_captured_1.json 
+    <signature>
+    ```
+
+6. **Invoke the API:**
 
    ```bash
    curl -X POST http://localhost:5000/webhook/payments -H "Content-Type: application/json" -H "X-Razorpay-Signature: <signature>" --data-binary @mock_payloads/payment_authorized_1.json
@@ -33,4 +39,6 @@
    {"status":"success"}
    ```
 
-* curl http://localhost:5000/payments/<paymend_id>/events
+   ```
+   curl http://localhost:5000/payments/<paymend_id>/events
+   ```

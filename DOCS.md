@@ -44,6 +44,15 @@ A JSON object representing a Razorpay payment event, e.g.:
 * 403 Forbidden – Invalid signature.
 * 500 Internal Server Error – Database error.
 
+**Computing Signature**:
+
+Use the `hash.py` script to generate the signature for payload:
+
+    ```bash
+    $ python hash.py mock_payloads/payment_captured_1.json 
+    <signature>
+    ```
+
 ### GET /payments/<payment_id>/events
 
 **Description**:
