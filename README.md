@@ -42,3 +42,16 @@
    ```
    curl http://localhost:5000/payments/<paymend_id>/events
    ```
+
+7. ** Query the SQLite DB **
+
+    ```
+    sqlite> select * from payment_events 
+    ...> ;
+
+| event_id|event_type|payment_id|received_at
+| --- | --- | --- | --- |
+|evt_auth_002|payment.authorized|pay_002|2025-10-04T02:01:35.008650
+|evt_auth_003|payment.authorized|pay_003|2025-10-04T02:01:35.064702
+...
+evt_cap_014|payment.captured|pay_014|2025-10-04T09:30:53.026691
