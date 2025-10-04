@@ -2,8 +2,8 @@
 
 1. **Clone the repository:**
     ```
-    git clone https://github.com/himanshugarg/civicdatalab.git
-    cd civicdatalab
+    git clone https://github.com/himanshugarg/cdl.git
+    cd cdl
     ```
 
 2. **Install dependencies:**
