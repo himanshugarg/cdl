@@ -5,7 +5,7 @@ if len(sys.argv) != 2:
     print(f"Usage: {sys.argv[0]} <filename>")
     sys.exit(1)
 
-secret = os.environ["RAZORPAY_SHARED_SECRET"].encode()
+secret = os.environ["RAZORPAY_SHARED_SECRET"]
 filename = sys.argv[1]
 
 with open(filename, "rb") as f:

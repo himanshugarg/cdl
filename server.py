@@ -1,3 +1,5 @@
+# Flask app for POSTing and GETting Razorpay payment webhook events
+
 from flask import Flask, request, abort, jsonify
 import hmac
 import hashlib
@@ -15,10 +17,12 @@ logging.basicConfig(
     format='%(asctime)s %(levelname)s %(message)s'
 )
 
+# Matches received signature with HMAC SHA256 signature of the payload
 def verify_signature(payload, received_signature, secret):
     computed_hmac = hmac.new(secret, payload, hashlib.sha256).hexdigest()
     return hmac.compare_digest(computed_hmac, received_signature)
 
+# Initializes the SQLite database and creates the payment_events table if it doesn't exist
 def init_db():
     with sqlite3.connect(DB_PATH) as conn:
         conn.execute('''
@@ -30,6 +34,7 @@ def init_db():
             )
         ''')
 
+# Inserts or updates a payment event in the database
 def insert_event(event_id, event_type, payment_id):
     with sqlite3.connect(DB_PATH) as conn:
         conn.execute('''
@@ -37,6 +42,7 @@ def insert_event(event_id, event_type, payment_id):
             VALUES (?, ?, ?, ?)
         ''', (event_id, event_type, payment_id, datetime.utcnow().isoformat()))
 
+# Endpoint to POST Razorpay payment webhook events
 @app.route('/webhook/payments', methods=['POST'])
 def webhook_payments():
     shared_secret = os.environ.get('RAZORPAY_SHARED_SECRET', '').encode()
@@ -73,6 +79,7 @@ def webhook_payments():
 
     return jsonify({"status": "success"})
 
+# Endpoint to GET all events for a given payment_id
 @app.route('/payments/<payment_id>/events')
 def payments_events(payment_id):
     with sqlite3.connect(DB_PATH) as conn:
@@ -91,7 +98,7 @@ if __name__ == '__main__':
     app.run(debug=debug_mode)
 
 
-# TODO: Address the following limitations for production use:s
+# TODO: Address the following limitations for production use:
 # Secret Management
 
 # The shared secret defaults to an empty string if not set. The app should fail to start if the secret is missing.
