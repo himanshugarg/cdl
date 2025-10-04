@@ -2,16 +2,16 @@
 
 ## Overview
 
-This service provides endpoints to receive and store Razorpay payment webhook events and to query stored payment events.
+Endpoints to POST and GET Razorpay payment webhook events.
 
 ---
 
 ## Endpoints
 
-### 1. POST `/webhook/payments`
+### POST `/webhook/payments`
 
 **Description:**  
-Receives a Razorpay payment webhook event, verifies its signature, and stores the event in the database.
+POST's a Razorpay payment webhook event
 
 **Headers:**
 - `Content-Type: application/json`
@@ -35,3 +35,34 @@ A JSON object representing a Razorpay payment event, e.g.:
   "created_at": 1751885965,
   "id": "evt_auth_001"
 }
+```
+
+**Responses**:
+
+* 200 OK
+* 400 Bad Request – Invalid JSON or missing required fields.
+* 403 Forbidden – Invalid signature.
+* 500 Internal Server Error – Database error.
+
+### GET /payments/<payment_id>/events
+
+**Description**:
+
+GET's a list of events for the given payment ID.
+
+**Path Parameters**:
+
+`payment_id` (string): The payment ID to query.
+
+**Response**:
+
+* 200 OK
+
+```json
+[
+  {
+    "event_type": "payment.authorized",
+    "received_at": "2025-10-04T12:34:56.789123"
+  },
+  ...
+]
