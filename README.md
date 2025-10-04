@@ -1,9 +1,3 @@
-## Setup
-
-- [Git](https://git-scm.com/)
-- [Node.js](https://nodejs.org/) (or your project's required runtime)
-- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/) (if applicable)
-
 ## Getting Started
 
 1. **Clone the repository:**
@@ -13,9 +7,9 @@
     ```
 
 2. **Install dependencies:**
-```
-pip install -r requirements.txt
-```
+   ```
+   pip install -r requirements.txt
+   ```
 
 3. **Configure environment variables:**
     - Configure the environment variable RAZORPAY_SHARED_SECRET
@@ -24,3 +18,19 @@ pip install -r requirements.txt
     ```
     flask --app server run
     ```
+
+5. **Invoke the API:**
+
+   ```bash
+   curl -X POST http://localhost:5000/webhook/payments -H "Content-Type: application/json" -H "X-Razorpay-Signature: <signature>" --data-binary @mock_payloads/payment_authorized_1.json
+   
+   {"status":"success"}
+   ```
+   
+   ```bash
+   curl -X POST http://localhost:5000/webhook/payments -H "Content-Type: application/json" -H "X-Razorpay-Signature: <signature>" --data-binary @mock_payloads/payment_captured_1.json 
+   
+   {"status":"success"}
+   ```
+
+* curl http://localhost:5000/payments/<paymend_id>/events
